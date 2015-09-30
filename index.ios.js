@@ -8,6 +8,7 @@ var {
     AppRegistry,
     Image,
     StyleSheet,
+    ListView,
     Text,
     View
     } = React;
@@ -15,21 +16,31 @@ var {
 var MOCKED_MOVIES_DATA = [
   {title: 'Title', year: '2015', posters: {thumbnail: 'http://i.imgur.com/UePbdph.jpg'}}
 ];
-var REQUEST_URL = 'https://raw.githubusercontent.com/facebook/react-native/master/docs/MoviesExample.json';
+//var REQUEST_URL = 'https://raw.githubusercontent.com/facebook/react-native/master/docs/MoviesExample.json';
+var API_KEY = '7waqfqbprs7pajbz28mqf6vz';
+var API_URL = 'http://api.rottentomatoes.com/api/public/v1.0/lists/movies/in_theaters.json';
+var PAGE_SIZE = 25;
+var PARAMS = '?apikey=' + API_KEY + '&page_limit=' + PAGE_SIZE;
+var REQUEST_URL = API_URL + PARAMS;
 
 var App = React.createClass({
   getInitialState: function () {
-    return {movies: null};
+    return {
+      loaded: false,
+      dataSource: new ListView.DataSource({
+        rowHasChanged: (row1, row2) => row1 !== row2
+      })
+    };
   },
   fetchData: function () {
     fetch(REQUEST_URL)
         .then((response) => response.json())
         .then((responseData)=> {
           this.setState({
-            movies: responseData.movies
+            dataSource: this.state.dataSource.cloneWithRows(responseData.movies),
+            loaded: true
           });
         }).done();
-    this.setState({movies: []});
   },
   componentDidMount: function () {
     this.fetchData();
@@ -42,6 +53,7 @@ var App = React.createClass({
     );
   },
   renderMovie: function (movie) {
+    console.log('rendering movie: ', movie);
     return (
         <View style={styles.container}>
           <Image
@@ -56,13 +68,17 @@ var App = React.createClass({
     );
   },
   render: function () {
-    var thisMovies = this.state.movies;
-    if (!(thisMovies && thisMovies.length > 0)) {
+    if (!this.state.loaded) {
       return this.renderLoadingView();
     }
 
-    var movie = thisMovies[0];
-    return this.renderMovie(movie);
+    return (
+        <ListView
+            dataSource={this.state.dataSource}
+            renderRow={this.renderMovie}
+            style={styles.listView}
+            />
+    );
   }
 });
 
@@ -72,13 +88,23 @@ var styles = {
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#F5FCFF',
-    flexDirection: 'row'
+    flexDirection: 'row',
+    marginTop: 5
   }, thumbnail: {
     width: 53,
     height: 81
   }, rightContainer: {
     flex: 50,
     alignItems: 'center'
+  }, listView: {
+    paddingTop: 20,
+    backgroundColor: '#F5FCFF'
+  }, title: {
+    fontSize: 20,
+    marginBottom: 8,
+    textAlign: 'center'
+  }, year: {
+    textAlign: 'center'
   }
 };
 
