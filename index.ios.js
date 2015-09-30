@@ -56,11 +56,12 @@ var App = React.createClass({
     );
   },
   render: function () {
-    if (!this.state.movies) {
+    var thisMovies = this.state.movies;
+    if (!(thisMovies && thisMovies.length > 0)) {
       return this.renderLoadingView();
     }
 
-    var movie = this.state.movies[0];
+    var movie = thisMovies[0];
     return this.renderMovie(movie);
   }
 });
