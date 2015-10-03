@@ -55,3 +55,6 @@ proguard/
 
 # Log Files
 *.log
+
+# React Native
+main.jsbundle
