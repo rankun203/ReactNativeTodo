@@ -10,7 +10,7 @@ A simple,,,, todo :briefcase:
 
 - **Open** `ios > reactNativeTodo.xcodeproj`, then:
 - **Search** for `8081` in the project, and **change** the IP address to another.
-  - If you run the App in a real phone, make sure your phone are in the same network with your computer, and change the IP to your computer's one.
+  - If you run the App in a real phone, make sure your phone are in the same network with your computer, and change the IP to your computers' one.
   - If you run the App in a simulator, change the IP to `localhost` (WIFI IP address may not work).
 - `cd server` and `./app.js` to start the API service, please **make sure** you have NodeJS and MongoDB installed.
 - **Open** `app > network > API.js` with your prefered editor, **change** the SERVER_PREFIX to your API service endpoint.
