@@ -24,7 +24,7 @@ var TodoListView = React.createClass({
     });
     var todos = this.props.todos || [];
     return {
-      dataSource: ds.cloneWithRows(this.props.todos),
+      dataSource: ds.cloneWithRows(todos),
       todos: todos
     };
   },
