@@ -5,9 +5,12 @@
 
 var React = require('react-native');
 var request = require('superagent');
+var KeyboardEvents = require('react-native-keyboardevents');
 var TodoInput = require('./TodoInput/TodoInput');
 var TodoList = require('./TodoList/TodoList');
 var API = require('../network/API');
+
+var KeyboardEventEmitter = KeyboardEvents.Emitter;
 
 var {
     View,
@@ -16,8 +19,19 @@ var {
 
 var TodoPane = React.createClass({
   getInitialState: function () {
+    KeyboardEventEmitter.on(KeyboardEvents.KeyboardDidShowEvent, (frames) => {
+      console.log('keyboardSpace to sth');
+      if (frames.end)
+        this.setState({keyboardSpace: frames.end.height});
+    });
+    KeyboardEventEmitter.on(KeyboardEvents.KeyboardWillHideEvent, (frames) => {
+      console.log('keyboardSpace to 0');
+      this.setState({keyboardSpace: 0});
+    });
+
     return {
-      todos: []
+      todos: [],
+      keyboardSpace: 0
     };
   },
   render: function () {
@@ -31,6 +45,7 @@ var TodoPane = React.createClass({
           <TodoInput
               ref={'TodoInput'}
               onAddTodo={this._handleAddTodo}/>
+          <View style={{height: this.state.keyboardSpace}}></View>
         </View>
     );
   },

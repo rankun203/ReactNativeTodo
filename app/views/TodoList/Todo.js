@@ -16,11 +16,13 @@ var {
 var TodoView = React.createClass({
   getInitialState: function () {
     var id = this.props.todo.id || this.props.todo._id;
+    var rowId = this.props.rowId;
     var title = this.props.todo.title;
     var done = this.props.todo.done;
     return {
       todo: {
         id: id,
+        rowId: rowId,
         title: title,
         done: done
       }
@@ -53,7 +55,7 @@ var TodoView = React.createClass({
     }
 
     this.setState(todo);
-    this._updateTodo(todo, function () {
+    this._updateTodo(todo, function (data) {
       console.log('Todo updated');
       //AlertIOS.alert('Todo updated.');
     });
@@ -63,7 +65,7 @@ var TodoView = React.createClass({
       opacity: opacity
     };
   }, _updateTodo: function (todo, cb) {
-    this.props.onUpdate(todo, cb);
+    this.props.onUpdate(this.state.todo.rowId, todo, cb);
   }
 });
 

@@ -30,6 +30,7 @@ var TodoListView = React.createClass({
   },
   render: function () {
     return (
+      // List 的每一个元素应该有个 id, 才能用来鉴别
         <ListView
             dataSource={this.state.dataSource}
             renderRow={this._renderRow}
@@ -41,13 +42,18 @@ var TodoListView = React.createClass({
   componentDidMount: function () {
     this._fetchData();
   },
-  _renderRow: function (rowData:String, rowId:Number) {
+  _renderRow: function (rowData:String, sectionId:Number, rowId:Number) {
     return (
         <TodoView
             todo={rowData}
-            onUpdate={updateTodo}
+            onUpdate={this._updateTodo}
+            rowId={rowId}
             />
     );
+  },
+  _updateTodo: function (rowId, todo, cb) {
+
+    updateTodo(todo, cb)
   },
   _fetchData: function () {
     getTodos(function (responseData) {
@@ -71,9 +77,15 @@ var TodoListView = React.createClass({
     });
 
     var onAddCompleted = this.props.onAddCompleted;
-    addTodo(todo, () => {
+    addTodo(todo, (data) => {
       console.log('Todo ' + title + ' added');
       if (onAddCompleted) onAddCompleted();
+
+      for (let k in data) todo[k] = data[k];
+      this.setState({
+        dataSource: this.state.dataSource.cloneWithRows(todos),
+        todos: todos
+      });
     });
   }
 });
@@ -103,8 +115,12 @@ function addTodo(todo, cb) {
       .send(todo)
       .set('contentType', 'application/json')
       .end(function (err, res) {
-        console.log(res);
-        if (cb) cb(res);
+        if (err) console.error(err);
+        else {
+          var data = JSON.parse(res.text);
+          console.log(data);
+          if (cb) cb(data);
+        }
       });
 }
 
@@ -115,8 +131,12 @@ function updateTodo(todo, cb) {
       .send(todo)
       .set('contentType', 'application/json')
       .end(function (err, res) {
-        console.log(res);
-        if (cb) cb(res);
+        if (err) console.error(err);
+        else {
+          var data = JSON.parse(res.text);
+          console.log(data);
+          if (cb) cb(data);
+        }
       });
 }
 
