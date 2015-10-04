@@ -9,6 +9,7 @@ var TodoSchema = new mongoose.Schema({
   title: {type: String, required: true, minlength: 1},
   done: {type: Boolean, required: true, default: false},
   dtl: {type: Date, default: 1},
+  created_at: {type: Data, default: Date.now},
   updated_at: {type: Date, default: Date.now}
 });
 
