@@ -61,7 +61,7 @@ var styles = StyleSheet.create({
   text: {
     fontSize: 30
   }, listStyle: {
-    backgroundColor: '#4CD964'
+    backgroundColor: '#1AD6FD'
   }
 });
 

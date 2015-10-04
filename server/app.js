@@ -6,12 +6,14 @@
 
 var express = require('express');
 var bodyParser = require('body-parser');
+var logger = require('morgan');
 var consObj = require('./helper').constructObj;
 var mongoose = require('./mongoose');
 var Todo = require('./Todo');
 var app = express();
 
 app.use(bodyParser.json());
+app.use(logger('dev'));
 
 app.get('/todos', function (req, res, next) {
   var skip = req.query.skip || 0;
@@ -48,6 +50,10 @@ app.delete('/todos/:id', function (req, res, next) {
   });
 });
 app.put('/todos/:id', function (req, res, next) {
+  console.log('update ' + req.params.id + ' to ', consObj(
+      'title', req.body.title,
+      'done', req.body.done
+  ));
   Todo.findByIdAndUpdate(
       req.params.id,
       consObj(

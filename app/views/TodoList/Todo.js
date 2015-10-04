@@ -22,7 +22,7 @@ var TodoView = React.createClass({
       todo: {
         id: id,
         title: title,
-        done: false
+        done: done
       }
     };
   },
@@ -53,7 +53,7 @@ var TodoView = React.createClass({
     }
 
     this.setState(todo);
-    this.props.update(todo, function () {
+    this._updateTodo(todo, function () {
       AlertIOS.alert('Todo updated.');
     });
   }, _todoStyle: function () {
@@ -61,6 +61,8 @@ var TodoView = React.createClass({
     return {
       opacity: opacity
     };
+  }, _updateTodo: function (todo, cb) {
+    this.props.update(todo, cb);
   }
 });
 
@@ -68,7 +70,7 @@ var styles = StyleSheet.create({
   item: {
     padding: 10,
     flexDirection: 'row',
-    backgroundColor: '#4CD964',
+    backgroundColor: '#1AD6FD',
     borderBottomColor: '#48D155',
     borderBottomWidth: 1
   }, textWrap: {

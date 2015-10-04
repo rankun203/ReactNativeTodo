@@ -5,7 +5,8 @@
 'use strict';
 
 var React = require('react-native');
-var TodoList = require('./app/views/TodoList/TodoList');
+//var TodoList = require('./app/views/TodoList/TodoList');
+var TodoPane = require('./app/views/TodoPane');
 var {
     AppRegistry,
     StyleSheet,
@@ -21,7 +22,7 @@ var ReactNativeTodo = React.createClass({
             tintColor='#FF6600'
             initialRoute={{
               title: 'Fantastic Todo',
-              component: TodoList
+              component: TodoPane
             }}
             />
     );
