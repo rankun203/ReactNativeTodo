@@ -5,6 +5,8 @@ A simple,,,, todo :briefcase:
 
 - `npm install` in the root directory.
 - `npm install` in the server directory if you want to get the server runs also.
+- Please also follow these steps to setup `react-native-keyboardevents`
+  - https://github.com/johanneslumpe/react-native-keyboardevents#how-to-move-a-view-when-the-keyboard-shows-up
 
 ### Run the app with live reload:
 
