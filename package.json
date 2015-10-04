@@ -7,6 +7,7 @@
   },
   "dependencies": {
     "react-native": "^0.11.4",
+    "react-native-button": "^1.2.1",
     "react-native-checkbox": "^1.0.2",
     "superagent": "^1.4.0"
   }

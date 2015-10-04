@@ -22,12 +22,13 @@ var TodoListView = React.createClass({
     var ds = new ListView.DataSource({
       rowHasChanged: (r1, r2) => r1 !== r2
     });
+    var todos = this.props.todos || [];
     return {
-      dataSource: ds
+      dataSource: ds.cloneWithRows(this.props.todos),
+      todos: todos
     };
   },
   render: function () {
-    var title = 'Title 1';
     return (
         <ListView
             dataSource={this.state.dataSource}
@@ -44,16 +45,36 @@ var TodoListView = React.createClass({
     return (
         <TodoView
             todo={rowData}
-            update={updateTodo}
+            onUpdate={updateTodo}
             />
     );
   },
   _fetchData: function () {
     getTodos(function (responseData) {
       this.setState({
-        dataSource: this.state.dataSource.cloneWithRows(responseData)
+        dataSource: this.state.dataSource.cloneWithRows(responseData),
+        todos: responseData
       });
     }.bind(this));
+  },
+  _handleAddTodo: function (title) {
+    var todo = {
+      title: title,
+      done: false
+    };
+
+    var todos = this.state.todos;
+    todos.push(todo);
+    this.setState({
+      dataSource: this.state.dataSource.cloneWithRows(todos),
+      todos: todos
+    });
+
+    var onAddCompleted = this.props.onAddCompleted;
+    addTodo(todo, () => {
+      console.log('Todo ' + title + ' added');
+      if (onAddCompleted) onAddCompleted();
+    });
   }
 });
 
@@ -61,7 +82,7 @@ var styles = StyleSheet.create({
   text: {
     fontSize: 30
   }, listStyle: {
-    backgroundColor: '#1AD6FD'
+    backgroundColor: '#4CD964'
   }
 });
 
@@ -73,6 +94,17 @@ function getTodos(cb) {
       .then(cb)
       .catch((error) => {
         console.warn(error);
+      });
+}
+
+function addTodo(todo, cb) {
+  var addTodoApi = API.SERVER_PREFIX + API.POST_TODO.api;
+  request.post(addTodoApi)
+      .send(todo)
+      .set('contentType', 'application/json')
+      .end(function (err, res) {
+        console.log(res);
+        if (cb) cb(res);
       });
 }
 
