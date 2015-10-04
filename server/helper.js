@@ -14,7 +14,7 @@ module.exports.constructObj = function () {
     throw new Error('Arguments length should be an even number: ' + arguments);
   }
   for (var i = 0; i < arguments.length; i++) {
-    if (arguments[i + 1]) {
+    if (arguments[i + 1] !== null) {
       obj[arguments[i]] = arguments[i + 1];
     }
     i++;
