@@ -5,7 +5,6 @@
 
 var API = {
   SERVER_PREFIX: 'http://rankun.org:3000',
-  SERVER_PREFIX: 'http://localhost:3000',
   updateServerPrefix: function (value) {
     this.SERVER_PREFIX = value;
   },
