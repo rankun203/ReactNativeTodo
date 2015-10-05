@@ -4,7 +4,10 @@
  */
 
 var API = {
-  SERVER_PREFIX: 'http://192.168.0.101:3000',
+  SERVER_PREFIX: 'http://localhost:3000',
+  updateServerPrefix: function (value) {
+    this.SERVER_PREFIX = value;
+  },
 
 // Todos
   GET_TODOS: {method: 'get', api: '/todos'},
