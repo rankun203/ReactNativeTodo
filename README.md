@@ -3,7 +3,7 @@ A simple,,,, todo :briefcase:
 
 ## Screenshots
 
-<img src='imgs/IMG_0327.PNG' alt='Todo List' width=200> <img src='imgs/IMG_0326.PNG' alt='Settings Panel' width=200>
+<img src='imgs/IMG_0327.PNG' alt='Todo List' width=200> <img src='imgs/IMG_0330.PNG' alt='Add Todo' width=200> <img src='imgs/IMG_0326.PNG' alt='Settings Panel' width=200>
 
 ## Installation & run
 
