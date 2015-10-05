@@ -7,6 +7,7 @@
 var React = require('react-native');
 //var TodoList = require('./app/views/TodoList/TodoList');
 var TodoPane = require('./app/views/TodoPane');
+var SettingsPage = require('./app/views/Settings');
 var {
     AppRegistry,
     StyleSheet,
@@ -18,11 +19,19 @@ var ReactNativeTodo = React.createClass({
   render: function () {
     return (
         <NavigatorIOS
+            ref='nav'
             style={styles.container}
-            tintColor='#FF6600'
+            tintColor='#0BD318'
             initialRoute={{
               title: 'Fantastic Todo',
-              component: TodoPane
+              component: TodoPane,
+              rightButtonIcon: require('image!tabnav_settings'),
+              onRightButtonPress: () => this.refs.nav.push({
+                title: 'Settings',
+                component: SettingsPage,
+                rightButtonTitle: 'Cancel',
+                onRightButtonPress: () => this.refs.nav.pop()
+              })
             }}
             />
     );
