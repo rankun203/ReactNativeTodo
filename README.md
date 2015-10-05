@@ -1,7 +1,11 @@
 # ReactNativeTodo
 A simple,,,, todo :briefcase:
 
-# Installation & run
+## Screenshots
+
+<img src='imgs/IMG_0327.PNG' alt='Todo List' width=200> <img src='imgs/IMG_0326.PNG' alt='Settings Panel' width=200>
+
+## Installation & run
 
 - `npm install` in the root directory.
 - `npm install` in the server directory if you want to get the server runs also.
